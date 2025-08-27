@@ -17,3 +17,6 @@ Bem-vindo à coleção! Clique na capa ou título para acessar cada história.
 [**Ler Novel →**](novel-sombria/index.md)
 
 </div>
+<!-- Vinculando CSS e JS -->
+<link rel="stylesheet" href="/assets/css/style.css">
+<script src="/assets/js/main.js"></script>
