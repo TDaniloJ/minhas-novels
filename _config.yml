@@ -1,0 +1,18 @@
+# Configuração global do site
+title: "Minha Biblioteca de Novels"
+description: "Plataforma para múltiplas novels de aventura, ação, drama e fantasia"
+baseurl: ""      # deixe vazio se o site estiver em https://SEU-USUARIO.github.io/
+url: "https://tdaniloj.github.io"  # substitua pelo seu usuário do GitHub
+
+# Tema (não usado, mas necessário para GitHub Pages)
+theme: minima
+
+# Parser Markdown
+markdown: kramdown
+kramdown:
+  input: GFM
+
+# Plugins (opcional)
+plugins: []
+
+# Navbar ou opções extras (opcional)
