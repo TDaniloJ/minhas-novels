@@ -96,8 +96,21 @@ p {
 
 .nav {
     display: flex;
-    align-items: center;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 1001;
+    transform: translateX(-100%);
+    transition: var(--transition);
+    opacity: 0;
+    visibility: hidden;
 }
 
 .nav-menu {
@@ -114,6 +127,7 @@ p {
     position: relative;
     padding: 0.5rem 0;
     transition: var(--transition);
+    background-color: var(--reader-accent);
 }
 
 .nav-menu a::after {
