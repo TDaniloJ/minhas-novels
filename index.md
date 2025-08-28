@@ -211,6 +211,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <!-- CSS e JS externos -->
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="{{ site.baseurl }}/assets/css/style.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-<script src="assets/js/main.js"></script>
+<script src="{{ site.baseurl }}/assets/js/main.js"></script>

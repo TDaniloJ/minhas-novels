@@ -1,6 +1,6 @@
 # Configuração global do site
 description: "Plataforma para múltiplas novels de aventura, ação, drama e fantasia"
-baseurl: ""      # deixe vazio se o site estiver em https://SEU-USUARIO.github.io/
+baseurl: "/minhas-novels"      # deixe vazio se o site estiver em https://SEU-USUARIO.github.io/
 url: "https://tdaniloj.github.io"  # substitua pelo seu usuário do GitHub
 
 # Tema (não usado, mas necessário para GitHub Pages)
