@@ -19,7 +19,7 @@ title: "Era do Qi"
   <div class="novel-cover">
     <div class="cover-placeholder">
 
-      <img src="{{ site.baseurl }}/assets/img/novel/cover-placeholder.png" alt="Capa da Novel">
+      <img src="{{ site.baseurl }}/assets/images/cover.png" alt="Capa da Novel">
 
       <i class="fas fa-book-open"></i>
       <p>Capa da Novel</p>
@@ -61,6 +61,12 @@ title: "Era do Qi"
       </a>
       <a href="extras/personagens.html" class="btn-secondary">
         <i class="fas fa-users"></i> Conhecer Personagens
+      </a>
+      <a href="extras/tecnicas.html" class="btn-secondary">
+        <i class="fas fa-magic"></i> Conhecer Técnicas
+      </a>
+      <a href="extras/seitas.html" class="btn-secondary">
+        <i class="fas fa-temple"></i> Conhecer Seitas
       </a>
     </div>
   </section>
@@ -115,7 +121,7 @@ title: "Era do Qi"
 
   <!-- Voltar -->
   <div class="back-nav">
-    <a href="../" class="btn-back">
+    <a href="../../" class="btn-back">
       <i class="fas fa-arrow-left"></i> Voltar ao Catálogo de Novels
     </a>
   </div>

@@ -41,7 +41,7 @@ title: "Biblioteca de Novels"
             <div class="novel-stat"><i class="fas fa-book"></i><span>Em breve</span></div>
             <div class="novel-stat"><i class="fas fa-skull"></i><span>Sombrio</span></div>
           </div>
-          <a href="{{ site.baseurl }}/novels/novel-sombria/" class="btn-primary"><i class="fas fa-play"></i> Começar Leitura</a>
+          <a href="{{ site.baseurl }}/novels/era-da-magia/" class="btn-primary"><i class="fas fa-play"></i> Começar Leitura</a>
         </div>
       </div>
 
