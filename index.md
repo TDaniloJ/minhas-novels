@@ -56,6 +56,14 @@ title: "Biblioteca de Novels"
       <p>Experiência de leitura profissional com todas as funcionalidades</p>
     </div>
     <div class="features-grid">
+
+    
+          <div class="admin-access" style="text-align: center; margin-top: 50px; opacity: 0.5;">
+      <a href="{{ site.baseurl }}/_admin/login.html" style="color: inherit; text-decoration: none;">
+        <i class="fas fa-cog"></i>
+      </a>
+    </div>
+
       <div class="feature-card"><div class="feature-icon"><i class="fas fa-search-plus"></i></div><h3>Controle de Zoom</h3><p>Ajuste o tamanho do texto</p></div>
       <div class="feature-card"><div class="feature-icon"><i class="fas fa-palette"></i></div><h3>Temas</h3><p>Noturno, sépia e mais</p></div>
       <div class="feature-card"><div class="feature-icon"><i class="fas fa-bookmark"></i></div><h3>Progresso</h3><p>Salvamento automático</p></div>
