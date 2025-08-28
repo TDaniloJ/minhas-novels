@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ site.description }}" />
+
+  <!-- Estilos globais -->
+  <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/style.css">
+  <link rel="icon" href="{{ site.baseurl }}/assets/favicon.ico">
+
+  <!-- Ícones -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+  <!-- Scripts globais -->
+  <script src="{{ site.baseurl }}/assets/js/main.js" defer></script>
+</head>
+<body>
+
+  <!-- Barra de progresso -->
+  <div class="reading-progress"></div>
+
+  <!-- Header / Navbar -->
+  <header class="header">
+    <div class="nav-container">
+      <a href="{{ site.baseurl }}/" class="logo">📚 Biblioteca de Novels</a>
+
+      <nav class="nav" id="siteNav">
+        <ul class="nav-menu">
+          <li><a href="{{ site.baseurl }}/#home">Início</a></li>
+          <li><a href="{{ site.baseurl }}/#novels">Novels</a></li>
+          <li><a href="{{ site.baseurl }}/#about">Sobre</a></li>
+        </ul>
+      </nav>
+
+      <button class="menu-toggle" aria-label="Abrir menu" onclick="toggleMobileMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <div class="overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
+
+  <!-- Conteúdo da página -->
+  <main class="page-content">
+    {{ content }}
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" id="about">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-links">
+          <a href="{{ site.baseurl }}/"><i class="fas fa-home"></i> Início</a>
+          <a href="{{ site.baseurl }}/#novels"><i class="fas fa-book"></i> Novels</a>
+          <a href="{{ site.baseurl }}/#about"><i class="fas fa-info-circle"></i> Sobre</a>
+          <a href="mailto:contato@exemplo.com"><i class="fas fa-envelope"></i> Contato</a>
+        </div>
+      </div>
+      <p>&copy; {{ "now" | date: "%Y" }} {{ site.title }}. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,4 +1,5 @@
 # Configuração global do site
+title: "📚 Minha Biblioteca de Novels"
 description: "Plataforma para múltiplas novels de aventura, ação, drama e fantasia"
 baseurl: "/minhas-novels"      # deixe vazio se o site estiver em https://SEU-USUARIO.github.io/
 url: "https://tdaniloj.github.io"  # substitua pelo seu usuário do GitHub
