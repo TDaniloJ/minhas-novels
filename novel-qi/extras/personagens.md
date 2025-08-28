@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Era do Qi"
+---
+
+
 # 🌟 Personagens Principais
 
 ## 🌱 Lian

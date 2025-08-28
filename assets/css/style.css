@@ -94,6 +94,12 @@ p {
     gap: 0.5rem;
 }
 
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
 .nav-menu {
     display: flex;
     list-style: none;
@@ -550,7 +556,7 @@ footer::before {
 }
 
 .overlay.active {
-    opacity: 1;
+    /*opacity: 1;*/
     visibility: visible;
 }
 
