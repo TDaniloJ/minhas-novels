@@ -899,3 +899,688 @@ html {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     transition: var(--transition);
 }
+
+/* ========================================
+   CSS ADICIONAL PARA O READER PROFISSIONAL
+   Adicionar este código ao final do style.css
+   ======================================== */
+
+/* Variáveis do Reader */
+:root {
+    --reader-toolbar-height: 70px;
+    --reader-sidebar-width: 320px;
+    --reader-settings-width: 350px;
+}
+
+/* Themes para Reader */
+[data-theme="light"] {
+    --reader-bg: #faf7f0;
+    --reader-text: #2c3e50;
+    --reader-accent: #3498db;
+    --reader-sidebar-bg: #34495e;
+    --reader-card-bg: white;
+}
+
+[data-theme="dark"] {
+    --reader-bg: #1a1a1a;
+    --reader-text: #e0e0e0;
+    --reader-accent: #64b5f6;
+    --reader-sidebar-bg: #2c2c2c;
+    --reader-card-bg: #2c2c2c;
+}
+
+[data-theme="sepia"] {
+    --reader-bg: #f4f1e8;
+    --reader-text: #5c4b37;
+    --reader-accent: #8d6e63;
+    --reader-sidebar-bg: #8b7355;
+    --reader-card-bg: #faf8f3;
+}
+
+/* Barra de Progresso de Leitura */
+.reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--reader-accent), #9b59b6);
+    z-index: 1004;
+    transform-origin: left;
+    transform: scaleX(var(--scroll, 0));
+    width: 100%;
+    transition: transform 0.1s ease;
+}
+
+/* Toolbar do Reader */
+.reader-toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--reader-toolbar-height);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    z-index: 1003;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+}
+
+[data-theme="dark"] .reader-toolbar {
+    background: rgba(44, 44, 44, 0.95);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="sepia"] .reader-toolbar {
+    background: rgba(244, 241, 232, 0.95);
+}
+
+.reader-toolbar.visible {
+    transform: translateY(0);
+}
+
+.toolbar-left, .toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.toolbar-btn {
+    background: none;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: var(--reader-text);
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.toolbar-btn:hover {
+    background: var(--reader-accent);
+    color: white;
+    border-color: var(--reader-accent);
+    transform: translateY(-1px);
+}
+
+.progress-container {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    max-width: 400px;
+    gap: 1rem;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 6px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+[data-theme="dark"] .progress-bar {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--reader-accent);
+    width: 0%;
+    transition: width 0.3s ease;
+    border-radius: 3px;
+}
+
+.progress-text {
+    font-size: 12px;
+    color: var(--reader-text);
+    opacity: 0.8;
+    white-space: nowrap;
+}
+
+/* Sidebar do Reader */
+.reader-sidebar {
+    position: fixed;
+    left: calc(-1 * var(--reader-sidebar-width));
+    top: 0;
+    width: var(--reader-sidebar-width);
+    height: 100vh;
+    background: var(--reader-sidebar-bg);
+    color: white;
+    z-index: 1002;
+    transition: left 0.3s ease;
+    overflow-y: auto;
+    box-shadow: 5px 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.reader-sidebar.active {
+    left: 0;
+}
+
+.sidebar-header {
+    padding: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sidebar-header h3 {
+    color: white;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.close-sidebar {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.close-sidebar:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(90deg);
+}
+
+.sidebar-content {
+    padding: 1rem;
+}
+
+.chapter-nav-section, .extras-nav-section {
+    margin-bottom: 2rem;
+}
+
+.sidebar-content h4 {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 1rem;
+}
+
+.chapter-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.chapter-nav-list li {
+    margin-bottom: 0.5rem;
+}
+
+.chapter-nav-list a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    padding: 12px 16px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.chapter-nav-list a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.chapter-nav-list a:hover {
+    background: rgba(52, 152, 219, 0.3);
+    color: white;
+    transform: translateX(5px);
+}
+
+.chapter-nav-list a:hover::before {
+    left: 100%;
+}
+
+.chapter-nav-list .current a {
+    background: var(--reader-accent);
+    color: white;
+}
+
+.chapter-nav-list i {
+    width: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* Painel de Configurações */
+.reader-settings {
+    position: fixed;
+    right: calc(-1 * var(--reader-settings-width));
+    top: var(--reader-toolbar-height);
+    width: var(--reader-settings-width);
+    height: calc(100vh - var(--reader-toolbar-height));
+    background: var(--reader-card-bg);
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    z-index: 1002;
+    transition: right 0.3s ease;
+    overflow-y: auto;
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .reader-settings {
+    border-left-color: rgba(255, 255, 255, 0.1);
+}
+
+.reader-settings.active {
+    right: 0;
+}
+
+.settings-header {
+    padding: 2rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--reader-accent);
+    color: white;
+}
+
+[data-theme="dark"] .settings-header {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.settings-header h3 {
+    color: white;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.close-settings {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.close-settings:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+}
+
+.settings-content {
+    padding: 2rem;
+}
+
+.setting-group {
+    margin-bottom: 2.5rem;
+}
+
+.setting-group h4 {
+    color: var(--reader-text);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.slider-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.setting-slider {
+    flex: 1;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.1);
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+}
+
+[data-theme="dark"] .setting-slider {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.setting-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--reader-accent);
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.setting-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.setting-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--reader-accent);
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.setting-value {
+    color: var(--reader-accent);
+    font-weight: bold;
+    min-width: 50px;
+    text-align: center;
+}
+
+.theme-selector {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.theme-option {
+    flex: 1;
+    background: none;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    color: var(--reader-text);
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 12px;
+}
+
+[data-theme="dark"] .theme-option {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-option:hover {
+    border-color: var(--reader-accent);
+    background: rgba(52, 152, 219, 0.1);
+}
+
+.theme-option.active {
+    border-color: var(--reader-accent);
+    background: var(--reader-accent);
+    color: white;
+}
+
+.theme-option i {
+    font-size: 1.5rem;
+}
+
+/* Overlay */
+.reader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.reader-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Atalhos de Teclado */
+.keyboard-shortcuts {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--reader-card-bg);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    max-width: 300px;
+    z-index: 1005;
+}
+
+[data-theme="dark"] .keyboard-shortcuts {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.keyboard-shortcuts.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.keyboard-shortcuts h4 {
+    color: var(--reader-text);
+    margin-bottom: 1rem;
+    font-size: 14px;
+}
+
+.shortcuts-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    font-size: 12px;
+}
+
+.shortcuts-grid div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+kbd {
+    background: var(--reader-accent);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: bold;
+    margin: 0 2px;
+}
+
+/* Responsivo para Reader */
+@media (max-width: 768px) {
+    :root {
+        --reader-sidebar-width: 280px;
+        --reader-settings-width: 280px;
+        --reader-toolbar-height: 60px;
+    }
+    
+    .reader-toolbar {
+        padding: 0 1rem;
+    }
+    
+    .toolbar-left, .toolbar-right {
+        gap: 0.5rem;
+    }
+    
+    .toolbar-btn {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+    
+    .progress-container {
+        max-width: 200px;
+    }
+    
+    .progress-text {
+        display: none;
+    }
+    
+    .settings-content {
+        padding: 1.5rem;
+    }
+    
+    .theme-selector {
+        flex-direction: column;
+    }
+    
+    .keyboard-shortcuts {
+        bottom: 10px;
+        right: 10px;
+        max-width: calc(100vw - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .toolbar-left .toolbar-btn span,
+    .toolbar-right .toolbar-btn span {
+        display: none;
+    }
+    
+    .reader-content {
+        padding: 1rem 0.5rem;
+    }
+    
+    .chapter-article {
+        padding: 1.5rem;
+    }
+}
+
+/* Melhorias de Performance */
+.reader-sidebar,
+.reader-settings,
+.reader-overlay {
+    will-change: transform, opacity;
+}
+
+.progress-fill {
+    will-change: width;
+}
+
+/* Estados de Loading */
+.reader-loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.reader-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    margin: -15px 0 0 -15px;
+    border: 3px solid rgba(52, 152, 219, 0.2);
+    border-top-color: var(--reader-accent);
+    border-radius: 50%;
+    animation: readerSpin 1s linear infinite;
+}
+
+@keyframes readerSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Animações específicas do Reader */
+@keyframes slideInFromLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.reader-sidebar.active {
+    animation: slideInFromLeft 0.3s ease-out;
+}
+
+.reader-settings.active {
+    animation: slideInFromRight 0.3s ease-out;
+}
+
+/* Acessibilidade melhorada */
+@media (prefers-reduced-motion: reduce) {
+    .reader-sidebar,
+    .reader-settings,
+    .reader-overlay,
+    .reader-toolbar {
+        transition: none;
+    }
+    
+    .progress-fill {
+        transition: none;
+    }
+}
+
+/* Estados de foco melhorados */
+.toolbar-btn:focus,
+.setting-slider:focus,
+.theme-option:focus,
+.chapter-nav-list a:focus {
+    outline: 2px solid var(--reader-accent);
+    outline-offset: 2px;
+}
+
+/* Print styles para reader */
+@media print {
+    .reader-toolbar,
+    .reader-sidebar,
+    .reader-settings,
+    .reader-overlay,
+    .reading-progress,
+    .keyboard-shortcuts {
+        display: none !important;
+    }
+    
+    .reader-content {
+        margin-top: 0 !important;
+        max-width: none !important;
+    }
+    
+    .chapter-article {
+        box-shadow: none !important;
+        border: 1px solid #ccc;
+    }
+}
