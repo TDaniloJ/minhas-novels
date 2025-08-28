@@ -15,7 +15,7 @@ title: "Biblioteca de Novels"
     <div class="novels-grid">
 
       <div class="novel-card">
-        <div class="novel-image"><div class="novel-image-icon">🌸</div></div>
+        <div class="novel-image"><div class="novel-image-icon"><img src="{{ site.baseurl }}/assets/images/cover.png" alt="Capa da Novel"></div></div>
         <div class="novel-content">
           <h3 class="novel-title">Era do Qi</h3>
           <p class="novel-synopsis">

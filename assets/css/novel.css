@@ -19,6 +19,13 @@
     transition: var(--transition);
 }
 
+.cover-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
 .cover-placeholder:hover {
     transform: scale(1.05);
 }

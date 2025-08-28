@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel Admin</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="admin-panel">
+    <div class="admin-container">
+        <header class="admin-header">
+            <h1>Painel Admin</h1>
+            <button onclick="logout()">Sair</button>
+        </header>
+
+        <div class="admin-content">
+            <div class="admin-section">
+                <h2>Criar Novo Capítulo</h2>
+                <form id="newChapterForm">
+                    <select id="novelSelect" required>
+                        <option value="">Selecione a Novel</option>
+                    </select>
+                    <input type="number" id="chapterNumber" placeholder="Número do Capítulo" required>
+                    <input type="text" id="chapterTitle" placeholder="Título do Capítulo" required>
+                    <textarea id="chapterContent" placeholder="Conteúdo do Capítulo" required></textarea>
+                    <button type="submit">Salvar Capítulo</button>
+                </form>
+            </div>
+
+            <div class="admin-section">
+                <h2>Capítulos Existentes</h2>
+                <div id="chaptersList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>
