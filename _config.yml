@@ -1,5 +1,5 @@
 # Configuração global do site
-title: "📚 Minha Biblioteca de Novels"
+title: "Minhas Novels e Mangas"
 description: "Plataforma para múltiplas novels de aventura, ação, drama e fantasia"
 baseurl: "/minhas-novels"      # deixe vazio se o site estiver em https://SEU-USUARIO.github.io/
 url: "https://tdaniloj.github.io"  # substitua pelo seu usuário do GitHub
@@ -12,7 +12,8 @@ markdown: kramdown
 kramdown:
   input: GFM
 
-# Plugins (opcional)
-plugins: []
-
-# Navbar ou opções extras (opcional)
+# Configurações personalizadas
+collections:
+  novels:
+    output: true
+    permalink: /:collection/:name/

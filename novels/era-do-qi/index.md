@@ -18,6 +18,9 @@ title: "Era do Qi"
   <!-- Capa -->
   <div class="novel-cover">
     <div class="cover-placeholder">
+
+      <img src="{{ site.baseurl }}/assets/img/novel/cover-placeholder.png" alt="Capa da Novel">
+
       <i class="fas fa-book-open"></i>
       <p>Capa da Novel</p>
     </div>

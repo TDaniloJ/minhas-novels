@@ -26,7 +26,7 @@ title: "Biblioteca de Novels"
             <div class="novel-stat"><i class="fas fa-book"></i><span>3 Capítulos</span></div>
             <div class="novel-stat"><i class="fas fa-star"></i><span>Cultivo</span></div>
           </div>
-          <a href="{{ site.baseurl }}/novel-qi/" class="btn-primary"><i class="fas fa-play"></i> Começar Leitura</a>
+          <a href="{{ site.baseurl }}/novels/era-do-qi/" class="btn-primary"><i class="fas fa-play"></i> Começar Leitura</a>
         </div>
       </div>
 
@@ -41,7 +41,7 @@ title: "Biblioteca de Novels"
             <div class="novel-stat"><i class="fas fa-book"></i><span>Em breve</span></div>
             <div class="novel-stat"><i class="fas fa-skull"></i><span>Sombrio</span></div>
           </div>
-          <a href="{{ site.baseurl }}/novel-sombria/" class="btn-primary"><i class="fas fa-play"></i> Começar Leitura</a>
+          <a href="{{ site.baseurl }}/novels/novel-sombria/" class="btn-primary"><i class="fas fa-play"></i> Começar Leitura</a>
         </div>
       </div>
 

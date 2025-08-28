@@ -96,10 +96,8 @@ p {
 
 .nav {
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    left: 0;
-    top: 0;
+    align-items: center;
+    gap: 1rem;
 }
 
 .nav-menu {
