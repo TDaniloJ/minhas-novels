@@ -1,0 +1,318 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum ContentStatus {
+  ONGOING
+  COMPLETED
+  HIATUS
+}
+
+enum ContentType {
+  MANGA
+  NOVEL
+}
+
+enum NotificationType {
+  NEW_CHAPTER
+  REPLY
+  LIKE
+  FOLLOW
+}
+
+model User {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  email     String   @unique
+  password  String
+  role      UserRole @default(USER)
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  mangas            Manga[]
+  novels            Novel[]
+  favorites         Favorite[]
+  readingProgress   ReadingProgress[]
+  ratings           Rating[]
+  comments          Comment[]
+  notifications     Notification[]
+
+  @@map("users")
+}
+
+model Manga {
+  id          String        @id @default(uuid())
+  title       String
+  description String        @db.Text
+  coverImage  String
+  author      String
+  status      ContentStatus @default(ONGOING)
+  genres      String[]
+  views       Int           @default(0)
+  rating      Float         @default(0)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  uploadedBy  String
+  uploader    User          @relation(fields: [uploadedBy], references: [id])
+
+  chapters        MangaChapter[]
+  favorites       Favorite[]
+  readingProgress ReadingProgress[]
+  ratings         Rating[]
+  comments        Comment[]
+
+  @@map("mangas")
+}
+
+model MangaChapter {
+  id            String   @id @default(uuid())
+  mangaId       String
+  manga         Manga    @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  chapterNumber Float
+  title         String
+  pages         Json
+  pdfUrl        String?
+  views         Int      @default(0)
+  publishedAt   DateTime @default(now())
+  createdAt     DateTime @default(now())
+
+  readingProgress ReadingProgress[]
+  comments        Comment[]
+
+  @@map("manga_chapters")
+}
+
+model Novel {
+  id          String        @id @default(uuid())
+  title       String
+  description String        @db.Text
+  coverImage  String
+  author      String
+  status      ContentStatus @default(ONGOING)
+  genres      String[]
+  views       Int           @default(0)
+  rating      Float         @default(0)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  uploadedBy  String
+  uploader    User          @relation(fields: [uploadedBy], references: [id])
+
+  chapters        NovelChapter[]
+  favorites       Favorite[]
+  readingProgress ReadingProgress[]
+  ratings         Rating[]
+  comments        Comment[]
+
+  characters    NovelCharacter[]
+  worldBuilding NovelWorldBuilding[]
+  volumes       NovelVolume[]
+  arcs          NovelArc[]
+  magicSystem   NovelMagic[]
+
+  @@map("novels")
+}
+
+model NovelCharacter {
+  id          String   @id @default(uuid())
+  novelId     String
+  novel       Novel    @relation(fields: [novelId], references: [id], onDelete: Cascade)
+  name        String
+  description String   @db.Text
+  image       String?
+  role        String   // Protagonista, Antagonista, Secundário
+  age         String?
+  personality String?  @db.Text
+  abilities   String[] // Array de habilidades
+  magicIds    String[] // IDs das magias que usa
+  appearance  String?  @db.Text
+  backstory   String?  @db.Text
+  createdAt   DateTime @default(now())
+
+  @@map("novel_characters")
+}
+
+model NovelWorldBuilding {
+  id          String   @id @default(uuid())
+  novelId     String
+  novel       Novel    @relation(fields: [novelId], references: [id], onDelete: Cascade)
+  title       String
+  category    String   // Geografia, História, Cultura, Política, etc
+  content     String   @db.Text
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("novel_world_building")
+}
+
+model NovelVolume {
+  id            String   @id @default(uuid())
+  novelId       String
+  novel         Novel    @relation(fields: [novelId], references: [id], onDelete: Cascade)
+  volumeNumber  Int
+  title         String
+  description   String?  @db.Text
+  coverImage    String?
+  createdAt     DateTime @default(now())
+
+  arcs NovelArc[]
+  chapters NovelChapter[]
+
+  @@map("novel_volumes")
+}
+
+model NovelArc {
+  id          String      @id @default(uuid())
+  novelId     String
+  novel       Novel       @relation(fields: [novelId], references: [id], onDelete: Cascade)
+  volumeId    String?
+  volume      NovelVolume? @relation(fields: [volumeId], references: [id], onDelete: SetNull)
+  arcNumber   Int
+  title       String
+  description String?     @db.Text
+  createdAt   DateTime    @default(now())
+
+  chapters NovelChapter[]
+
+  @@map("novel_arcs")
+}
+
+model NovelMagic {
+  id          String   @id @default(uuid())
+  novelId     String
+  novel       Novel    @relation(fields: [novelId], references: [id], onDelete: Cascade)
+  name        String
+  type        String   // Elemento, Suporte, Ataque, Defesa, etc
+  description String   @db.Text
+  level       String?  // Básico, Intermediário, Avançado, Mestre
+  requirements String? @db.Text
+  effects     String[] // Array de efeitos
+  manaCost     String?
+  cooldown     String?
+  range        String?
+  createdAt   DateTime @default(now())
+
+  @@map("novel_magic")
+}
+
+model NovelChapter {
+  id            String   @id @default(uuid())
+  novelId       String
+  novel         Novel    @relation(fields: [novelId], references: [id], onDelete: Cascade)
+  chapterNumber Float
+  title         String
+  content       String   @db.Text
+  views         Int      @default(0)
+  publishedAt   DateTime @default(now())
+  createdAt     DateTime @default(now())
+
+  readingProgress ReadingProgress[]
+  comments        Comment[]
+
+  volumeId String?
+  volume   NovelVolume? @relation(fields: [volumeId], references: [id], onDelete: SetNull)
+  arcId    String?
+  arc      NovelArc?    @relation(fields: [arcId], references: [id], onDelete: SetNull)
+
+  @@map("novel_chapters")
+}
+
+model Favorite {
+  id          String      @id @default(uuid())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  contentType ContentType
+  mangaId     String?
+  manga       Manga?      @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  novelId     String?
+  novel       Novel?      @relation(fields: [novelId], references: [id], onDelete: Cascade)
+  createdAt   DateTime    @default(now())
+
+  @@unique([userId, contentType, mangaId, novelId])
+  @@map("favorites")
+}
+
+model ReadingProgress {
+  id             String   @id @default(uuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  contentType    ContentType
+  mangaId        String?
+  manga          Manga?   @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  novelId        String?
+  novel          Novel?   @relation(fields: [novelId], references: [id], onDelete: Cascade)
+  mangaChapterId String?
+  mangaChapter   MangaChapter? @relation(fields: [mangaChapterId], references: [id], onDelete: Cascade)
+  novelChapterId String?
+  novelChapter   NovelChapter? @relation(fields: [novelChapterId], references: [id], onDelete: Cascade)
+  progress       Int      @default(0)
+  lastReadAt     DateTime @default(now())
+
+  @@unique([userId, contentType, mangaId, novelId])
+  @@map("reading_progress")
+}
+
+model Rating {
+  id          String      @id @default(uuid())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  contentType ContentType
+  mangaId     String?
+  manga       Manga?      @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  novelId     String?
+  novel       Novel?      @relation(fields: [novelId], references: [id], onDelete: Cascade)
+  rating      Int
+  createdAt   DateTime    @default(now())
+
+  @@unique([userId, contentType, mangaId, novelId])
+  @@map("ratings")
+}
+
+model Comment {
+  id             String        @id @default(uuid())
+  userId         String
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  contentType    ContentType
+  mangaId        String?
+  manga          Manga?        @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  novelId        String?
+  novel          Novel?        @relation(fields: [novelId], references: [id], onDelete: Cascade)
+  mangaChapterId String?
+  mangaChapter   MangaChapter? @relation(fields: [mangaChapterId], references: [id], onDelete: Cascade)
+  novelChapterId String?
+  novelChapter   NovelChapter? @relation(fields: [novelChapterId], references: [id], onDelete: Cascade)
+  parentId       String?
+  parent         Comment?      @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies        Comment[]     @relation("CommentReplies")
+  content        String        @db.Text
+  likes          Int           @default(0)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@map("comments")
+}
+
+model Notification {
+  id        String           @id @default(uuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      NotificationType
+  contentId String?
+  message   String
+  isRead    Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  @@map("notifications")
+}
+
