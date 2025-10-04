@@ -191,3 +191,47 @@ export const updateProfile = async (req, res) => {
     res.status(500).json({ error: 'Erro ao atualizar perfil' });
   }
 };
+
+export const updateProfileWithAvatar = async (req, res) => {
+  try {
+    const { username } = req.body;
+
+    const updateData = {};
+    if (username) updateData.username = username;
+    if (req.file) {
+      updateData.avatar = `/uploads/avatars/${req.file.filename}`;
+    }
+
+    // Verificar se username já existe
+    if (username && username !== req.user.username) {
+      const existingUsername = await prisma.user.findUnique({
+        where: { username },
+      });
+
+      if (existingUsername) {
+        return res.status(400).json({ error: 'Username já em uso' });
+      }
+    }
+
+    const user = await prisma.user.update({
+      where: { id: req.user.id },
+      data: updateData,
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        role: true,
+        avatar: true,
+        createdAt: true,
+      },
+    });
+
+    res.json({
+      message: 'Perfil atualizado com sucesso',
+      user,
+    });
+  } catch (error) {
+    console.error('Erro ao atualizar perfil:', error);
+    res.status(500).json({ error: 'Erro ao atualizar perfil' });
+  }
+};

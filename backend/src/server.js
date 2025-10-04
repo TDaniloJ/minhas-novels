@@ -25,6 +25,7 @@ import commentRoutes from './routes/comment.js';
 import ratingRoutes from './routes/rating.js';
 import novelAdvancedRoutes from './routes/novelAdvanced.js';
 import progressRoutes from './routes/progress.js';
+import notificationRoutes from './routes/notification.js';
 
 // Middlewares
 app.use(cors());
@@ -44,6 +45,7 @@ app.use('/api/comments', commentRoutes);
 app.use('/api/ratings', ratingRoutes);
 app.use('/api/novel-advanced', novelAdvancedRoutes);
 app.use('/api/progress', progressRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 // Routes
 app.get('/health', (req, res) => {

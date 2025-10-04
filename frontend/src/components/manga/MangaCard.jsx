@@ -25,6 +25,11 @@ const MangaCard = ({ manga }) => {
                manga.status === 'COMPLETED' ? 'Completo' : 'Hiato'}
             </span>
           </div>
+          <div className="absolute top-2 left-2">
+            <span className="px-2 py-1 text-xs font-semibold rounded bg-purple-500 text-white">
+              Manga
+            </span>
+          </div>
         </div>
 
         {/* Informações */}

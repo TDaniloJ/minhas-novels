@@ -1,20 +1,34 @@
-import { useState, useRef, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
-import NotificationBell from '../common/NotificationBell';
-import { 
-  BookOpen, User, LogOut, Search, Heart, Clock, 
-  Menu, X, ChevronDown, Book, Settings, LayoutDashboard
-} from 'lucide-react';
+import { useState, useRef, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
+import NotificationBell from "../common/NotificationBell";
+import { useTheme } from "../../contexts/ThemeContext";
+import {
+  BookOpen,
+  User,
+  LogOut,
+  Search,
+  Heart,
+  Clock,
+  Menu,
+  X,
+  ChevronDown,
+  Book,
+  Settings,
+  LayoutDashboard,
+  Moon,
+  Sun,
+} from "lucide-react";
 
 const Header = () => {
   const { user, logout, isAdmin } = useAuth();
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [browseDropdownOpen, setBrowseDropdownOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
-  
+  const { isDark, toggleTheme } = useTheme();
+
   const browseRef = useRef(null);
   const userRef = useRef(null);
 
@@ -29,20 +43,20 @@ const Header = () => {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleLogout = () => {
     logout();
-    navigate('/');
+    navigate("/");
   };
 
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       navigate(`/search?q=${searchQuery}`);
-      setSearchQuery('');
+      setSearchQuery("");
       setMobileMenuOpen(false);
     }
   };
@@ -52,13 +66,19 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 text-primary-600 font-bold text-xl">
+          <Link
+            to="/"
+            className="flex items-center space-x-2 text-primary-600 font-bold text-xl"
+          >
             <BookOpen className="w-8 h-8" />
             <span className="hidden sm:block">MangaVerse</span>
           </Link>
 
           {/* Search Bar - Desktop */}
-          <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-md mx-8">
+          <form
+            onSubmit={handleSearch}
+            className="hidden md:flex flex-1 max-w-md mx-8"
+          >
             <div className="relative w-full">
               <input
                 type="text"
@@ -73,6 +93,18 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
+
+                          <button
+                onClick={toggleTheme}
+                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition"
+                title={isDark ? "Modo Claro" : "Modo Escuro"}
+              >
+                {isDark ? (
+                  <Sun className="w-5 h-5" />
+                ) : (
+                  <Moon className="w-5 h-5" />
+                )}
+              </button>
             {/* Browse Dropdown */}
             <div className="relative" ref={browseRef}>
               <button
@@ -82,6 +114,8 @@ const Header = () => {
                 <span>Explorar</span>
                 <ChevronDown className="w-4 h-4" />
               </button>
+
+
 
               {browseDropdownOpen && (
                 <div className="absolute top-full mt-2 left-0 w-48 bg-white rounded-lg shadow-xl border border-gray-200 py-2">
@@ -196,7 +230,10 @@ const Header = () => {
               </>
             ) : (
               <>
-                <Link to="/login" className="text-gray-700 hover:text-primary-600 transition">
+                <Link
+                  to="/login"
+                  className="text-gray-700 hover:text-primary-600 transition"
+                >
                   Entrar
                 </Link>
                 <Link to="/register" className="btn-primary">
@@ -211,7 +248,23 @@ const Header = () => {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="md:hidden p-2 hover:bg-gray-100 rounded-lg"
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
+          </button>
+
+          <button
+            onClick={toggleTheme}
+            className="flex items-center space-x-2 px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg w-full text-left"
+          >
+            {isDark ? (
+              <Sun className="w-5 h-5" />
+            ) : (
+              <Moon className="w-5 h-5" />
+            )}
+            <span>{isDark ? "Modo Claro" : "Modo Escuro"}</span>
           </button>
         </div>
 

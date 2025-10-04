@@ -13,7 +13,6 @@ const NotificationBell = () => {
   useEffect(() => {
     if (user) {
       loadNotifications();
-      // Poll a cada 30 segundos
       const interval = setInterval(loadNotifications, 30000);
       return () => clearInterval(interval);
     }
@@ -21,7 +20,6 @@ const NotificationBell = () => {
 
   const loadNotifications = async () => {
     try {
-      // Você precisará criar essa rota
       const { data } = await api.get('/notifications');
       setNotifications(data);
       setUnreadCount(data.filter(n => !n.isRead).length);
@@ -39,53 +37,81 @@ const NotificationBell = () => {
     }
   };
 
+  const markAllAsRead = async () => {
+    try {
+      await api.put('/notifications/read-all');
+      loadNotifications();
+    } catch (error) {
+      console.error('Erro ao marcar todas:', error);
+    }
+  };
+
   if (!user) return null;
 
   return (
     <div className="relative">
       <button
         onClick={() => setShowDropdown(!showDropdown)}
-        className="relative p-2 hover:bg-gray-100 rounded-full transition"
+        className="relative p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition"
       >
         <Bell className="w-6 h-6" />
         {unreadCount > 0 && (
           <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-            {unreadCount}
+            {unreadCount > 9 ? '9+' : unreadCount}
           </span>
         )}
       </button>
 
       {showDropdown && (
-        <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
-          <div className="p-4 border-b border-gray-200">
-            <h3 className="font-bold">Notificações</h3>
-          </div>
-          <div className="max-h-96 overflow-y-auto">
-            {notifications.length === 0 ? (
-              <div className="p-4 text-center text-gray-500">
-                Nenhuma notificação
-              </div>
-            ) : (
-              notifications.map((notif) => (
-                <div
-                  key={notif.id}
-                  className={`p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer ${
-                    !notif.isRead ? 'bg-blue-50' : ''
-                  }`}
-                  onClick={() => {
-                    markAsRead(notif.id);
-                    setShowDropdown(false);
-                  }}
+        <>
+          <div className="fixed inset-0 z-40" onClick={() => setShowDropdown(false)} />
+          <div className="absolute right-0 mt-2 w-96 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 z-50">
+            <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+              <h3 className="font-bold">Notificações</h3>
+              {unreadCount > 0 && (
+                <button
+                  onClick={markAllAsRead}
+                  className="text-xs text-primary-600 hover:underline"
                 >
-                  <p className="text-sm font-semibold">{notif.message}</p>
-                  <p className="text-xs text-gray-500 mt-1">
-                    {new Date(notif.createdAt).toLocaleDateString('pt-BR')}
-                  </p>
+                  Marcar todas como lidas
+                </button>
+              )}
+            </div>
+            <div className="max-h-96 overflow-y-auto">
+              {notifications.length === 0 ? (
+                <div className="p-8 text-center text-gray-500 dark:text-gray-400">
+                  <Bell className="w-12 h-12 mx-auto mb-2 opacity-50" />
+                  <p>Nenhuma notificação</p>
                 </div>
-              ))
-            )}
+              ) : (
+                notifications.map((notif) => (
+                  <div
+                    key={notif.id}
+                    className={`p-4 border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer transition ${
+                      !notif.isRead ? 'bg-blue-50 dark:bg-blue-900/20' : ''
+                    }`}
+                    onClick={() => {
+                      markAsRead(notif.id);
+                      setShowDropdown(false);
+                    }}
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold">{notif.message}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                          {new Date(notif.createdAt).toLocaleString('pt-BR')}
+                        </p>
+                      </div>
+                      {!notif.isRead && (
+                        <div className="w-2 h-2 bg-blue-500 rounded-full ml-2 mt-1" />
+                      )}
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );
